@@ -1,12 +1,14 @@
 ﻿namespace oop_lab1;
 
+public readonly record struct SkuId(uint Value);
+
 public class Sku
 {
-    public int Id { get; }
+    public SkuId Id { get; }
     public string Name { get; }
     public double VolumeWeightChars { get; }
 
-    public Sku(int id, string name, double volumeWeightChars)
+    public Sku(SkuId id, string name, double volumeWeightChars)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(volumeWeightChars);
         Id = id;
