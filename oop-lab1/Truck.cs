@@ -2,20 +2,16 @@
 
 namespace oop_lab1;
 
-public class Truck
+public class Truck : SkuHolder
 {
-    public double Capacity { get; }
-    public double Speed { get; }
-    public Coordinates Location { get; private set; }
-    private readonly Dictionary<Sku, uint> _skus;
+    private double Speed { get; }
+    private Coordinates Location { get; set; }
 
-    public Truck(double capacity, double speed, Coordinates location)
+    public Truck(double capacity, double speed, Coordinates location) : base(capacity)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(speed);
-        Capacity = capacity;
         Speed = speed;
         Location = location;
-        _skus = new Dictionary<Sku, uint>();
     }
 
     public TimeSpan MoveTo(Coordinates target)
@@ -26,48 +22,23 @@ public class Truck
         return TimeSpan.FromHours(hours);
     }
 
-    private double GetTotalVolumeWeightChars()
-    {
-        double total = 0;
-        foreach (var sku in _skus)
-        {
-            total += sku.Key.VolumeWeightChars * sku.Value;
-        }
-        return total;
-    }
-
     public TruckLoadResult Load(Sku sku, uint quantity)
     {
-        if (sku.VolumeWeightChars * quantity > Capacity - GetTotalVolumeWeightChars())
+        if (TryAddSku(sku, quantity))
         {
-            return new TruckLoadResult.LoadFailure((sku, quantity));
+            return new TruckLoadResult.LoadSuccess();
         }
 
-        if (!_skus.ContainsKey(sku))
-        {
-            _skus.Add(sku, quantity);
-        }
-        else
-        {
-            _skus[sku] += quantity;
-        }
-
-        return new TruckLoadResult.LoadSuccess();
+        return new TruckLoadResult.LoadFailure((sku, quantity));
     }
 
     public TruckUnloadResult Unload(Sku sku, uint quantity)
     {
-        if (!_skus.ContainsKey(sku) || _skus[sku] < quantity)
+        if (TryRemoveSku(sku, quantity))
         {
-            return new TruckUnloadResult.UnloadFailure((sku, quantity));
+            return new TruckUnloadResult.UnloadSuccess();
         }
         
-        _skus[sku] -= quantity;
-        if (_skus[sku] == 0)
-        {
-            _skus.Remove(sku);
-        }
-        
-        return new TruckUnloadResult.UnloadSuccess();
+        return new TruckUnloadResult.UnloadFailure((sku, quantity));
     }
 }
