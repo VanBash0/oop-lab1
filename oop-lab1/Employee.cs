@@ -1,15 +1,30 @@
 ﻿namespace oop_lab1;
 
-public class Employee
+public class Employee : IComparable<Employee>
 {
-    private double Capacity { get; }
-    private TimeSpan LoadTime { get; }
-    private TimeSpan MoveTime { get; }
+    public double Capacity { get; }
+    public TimeSpan LoadTime { get; }
+    public TimeSpan MoveTime { get; }
 
     public Employee(double capacity, TimeSpan loadTime, TimeSpan moveTime, Sku sku)
     {
         Capacity = capacity;
         LoadTime = loadTime;
         MoveTime = moveTime;
+    }
+
+    public int CompareTo(Employee? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+        
+        var capacityComparison = other.Capacity.CompareTo(Capacity);
+        if (capacityComparison == 0)
+        {
+            return LoadTime.CompareTo(other.LoadTime);
+        }
+        return capacityComparison;
     }
 }
