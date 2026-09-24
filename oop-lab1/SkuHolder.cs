@@ -22,36 +22,49 @@ public class SkuHolder
         return Capacity - occupiedSpace;
     }
 
-    protected bool TryAddSku(Sku sku, uint quantity)
+    protected bool TryAddSku(Manifest manifest)
     {
-        if (sku.VolumeWeightChars * quantity > GetFreeSpace())
+        if (manifest.GetTotalVolumeWeightChars() > GetFreeSpace())
         {
             return false;
         }
-        
-        if (!_skus.ContainsKey(sku))
-        {
-            _skus.Add(sku, quantity);
-        }
-        else
-        {
-            _skus[sku] += quantity;
-        }
 
+        foreach (var skuSet in manifest.SkuSets)
+        {
+            var sku = skuSet.Sku;
+            var quantity = skuSet.Quantity;
+            if (!_skus.ContainsKey(sku))
+            {
+                _skus.Add(sku, quantity);
+            }
+            else
+            {
+                _skus[sku] += quantity;
+            }
+        }
+        
         return true;
     }
 
-    protected bool TryRemoveSku(Sku sku, uint quantity)
+    protected bool TryRemoveSku(Manifest manifest)
     {
-        if (!_skus.ContainsKey(sku) || _skus[sku] < quantity)
+        foreach (var skuSet in manifest.SkuSets)
         {
-            return false;
+            if (!_skus.ContainsKey(skuSet.Sku) || _skus[skuSet.Sku] < skuSet.Quantity)
+            {
+                return false;
+            }
         }
-        
-        _skus[sku] -= quantity;
-        if (_skus[sku] == 0)
+
+        foreach (var skuSet in manifest.SkuSets)
         {
-            _skus.Remove(sku);
+            var sku = skuSet.Sku;
+            var quantity = skuSet.Quantity;
+            _skus[sku] -= quantity;
+            if (_skus[sku] == 0)
+            {
+                _skus.Remove(sku);
+            }
         }
 
         return true;

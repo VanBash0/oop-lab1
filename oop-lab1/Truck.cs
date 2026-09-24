@@ -22,23 +22,23 @@ public class Truck : SkuHolder
         return TimeSpan.FromHours(hours);
     }
 
-    public TruckLoadResult Load(Sku sku, uint quantity)
+    public TruckLoadResult Load(Manifest manifest)
     {
-        if (TryAddSku(sku, quantity))
+        if (TryAddSku(manifest))
         {
             return new TruckLoadResult.LoadSuccess();
         }
 
-        return new TruckLoadResult.LoadFailure((sku, quantity));
+        return new TruckLoadResult.LoadFailure(manifest);
     }
 
-    public TruckUnloadResult Unload(Sku sku, uint quantity)
+    public TruckUnloadResult Unload(Manifest manifest)
     {
-        if (TryRemoveSku(sku, quantity))
+        if (TryRemoveSku(manifest))
         {
             return new TruckUnloadResult.UnloadSuccess();
         }
         
-        return new TruckUnloadResult.UnloadFailure((sku, quantity));
+        return new TruckUnloadResult.UnloadFailure(manifest);
     }
 }

@@ -19,25 +19,25 @@ public class Warehouse : SkuHolder
         _manager = new EmployeeManager(employees);
     }
 
-    public WarehouseLoadResult Load(Sku sku, uint quantity)
+    public WarehouseLoadResult Load(Manifest manifest)
     {
-        if (!TryAddSku(sku, quantity))
+        if (!TryAddSku(manifest))
         {
-            return new WarehouseLoadResult.LoadFailure((sku, quantity));
+            return new WarehouseLoadResult.LoadFailure(manifest);
         }
         
-        var loadTime = _manager.CalculateLoadTime(sku, quantity);
+        var loadTime = _manager.CalculateLoadTime(manifest);
         return new WarehouseLoadResult.LoadSuccess(loadTime);
     }
 
-    public WarehouseUnloadResult Unload(Sku sku, uint quantity)
+    public WarehouseUnloadResult Unload(Manifest manifest)
     {
-        if (!TryRemoveSku(sku, quantity))
+        if (!TryRemoveSku(manifest))
         {
-            return new WarehouseUnloadResult.UnloadFailure((sku, quantity));
+            return new WarehouseUnloadResult.UnloadFailure(manifest);
         }
         
-        var unloadTime = _manager.CalculateUnloadTime(sku, quantity);
+        var unloadTime = _manager.CalculateUnloadTime(manifest);
         return new WarehouseUnloadResult.UnloadSuccess(unloadTime);
     }
 }

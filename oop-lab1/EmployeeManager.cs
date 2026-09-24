@@ -2,18 +2,20 @@
 
 public class EmployeeManager
 {
+    private readonly List<Employee> _employees;
+    
     public EmployeeManager(List<Employee> employees)
     {
-        // TODO
+        _employees = employees;
     }
 
-    public TimeSpan CalculateLoadTime(Sku sku, uint quantity)
+    public TimeSpan CalculateLoadTime(Manifest manifest)
     {
         // TODO
         return TimeSpan.Zero;
     }
 
-    public TimeSpan CalculateUnloadTime(Sku sku, uint quantity)
+    public TimeSpan CalculateUnloadTime(Manifest manifest)
     {
         // TODO
         return TimeSpan.Zero;

@@ -6,7 +6,7 @@ public abstract record TruckLoadResult
     
     public record LoadSuccess : TruckLoadResult;
     
-    public record LoadFailure((Sku, uint) RejectedSku) : TruckLoadResult;
+    public record LoadFailure(Manifest RejectedManifest) : TruckLoadResult;
 }
 
 public abstract record TruckUnloadResult
@@ -15,5 +15,5 @@ public abstract record TruckUnloadResult
     
     public record UnloadSuccess : TruckUnloadResult;
     
-    public record UnloadFailure((Sku, uint) RejectedSku) : TruckUnloadResult;
+    public record UnloadFailure(Manifest RejectedManifest) : TruckUnloadResult;
 }

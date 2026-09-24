@@ -6,7 +6,7 @@ public abstract record WarehouseLoadResult
     
     public record LoadSuccess(TimeSpan LoadTime) : WarehouseLoadResult;
     
-    public record LoadFailure((Sku, uint) RejectedSku) : WarehouseLoadResult;
+    public record LoadFailure(Manifest RejectedManifest) : WarehouseLoadResult;
 }
 
 public abstract record WarehouseUnloadResult
@@ -15,5 +15,5 @@ public abstract record WarehouseUnloadResult
     
     public record UnloadSuccess(TimeSpan UnloadTIme) : WarehouseUnloadResult;
     
-    public record UnloadFailure((Sku, uint) RejectedSku) : WarehouseUnloadResult;
+    public record UnloadFailure(Manifest RejectedManifest) : WarehouseUnloadResult;
 }
