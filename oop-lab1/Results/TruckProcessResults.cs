@@ -4,16 +4,16 @@ public abstract record TruckLoadResult
 {
     private TruckLoadResult() { }
     
-    public record LoadSuccess : TruckLoadResult;
+    public sealed record LoadSuccess : TruckLoadResult;
     
-    public record LoadFailure(Manifest RejectedManifest) : TruckLoadResult;
+    public sealed record LoadFailure(Manifest RejectedManifest) : TruckLoadResult;
 }
 
 public abstract record TruckUnloadResult
 {
     private TruckUnloadResult() { }
     
-    public record UnloadSuccess : TruckUnloadResult;
+    public sealed record UnloadSuccess : TruckUnloadResult;
     
-    public record UnloadFailure(Manifest RejectedManifest) : TruckUnloadResult;
+    public sealed record UnloadFailure(Manifest RejectedManifest) : TruckUnloadResult;
 }

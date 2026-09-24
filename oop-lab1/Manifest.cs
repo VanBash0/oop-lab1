@@ -4,9 +4,9 @@ public class Manifest
 {
     private readonly List<SkuSet> _skuSets;
 
-    public Manifest(List<SkuSet> skuSets)
+    public Manifest(IEnumerable<SkuSet> skuSets)
     {
-        _skuSets = skuSets;
+        _skuSets = skuSets.ToList();
     }
     
     public IReadOnlyList<SkuSet> SkuSets => _skuSets;

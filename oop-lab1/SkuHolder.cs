@@ -1,14 +1,13 @@
 ﻿namespace oop_lab1;
 
-public class SkuHolder
+public abstract class SkuHolder
 {
-    private double Capacity { get; }
-    
+    private readonly double _сapacity;
     private readonly Dictionary<Sku, uint> _skus;
 
-    protected SkuHolder(double capacity)
+    protected SkuHolder(double сapacity)
     {
-        Capacity = capacity;
+        _сapacity = сapacity;
         _skus = new Dictionary<Sku, uint>();
     }
     
@@ -19,7 +18,7 @@ public class SkuHolder
         {
             occupiedSpace += sku.Key.VolumeWeightChars * sku.Value;
         }
-        return Capacity - occupiedSpace;
+        return _сapacity - occupiedSpace;
     }
 
     protected bool TryAddSku(Manifest manifest)

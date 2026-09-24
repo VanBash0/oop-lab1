@@ -2,7 +2,7 @@
 
 namespace oop_lab1;
 
-public readonly struct WarehouseId(uint Value);
+public readonly record struct WarehouseId(uint Value);
 
 public class Warehouse : SkuHolder
 {
@@ -12,7 +12,7 @@ public class Warehouse : SkuHolder
     private readonly EmployeeManager _manager;
 
     public Warehouse(WarehouseId id, Coordinates location,
-                     uint capacity, List<Employee> employees) : base(capacity)
+                     uint сapacity, List<Employee> employees) : base(сapacity)
     {
         Id = id;
         Location = location;

@@ -4,16 +4,16 @@ public abstract record WarehouseLoadResult
 {
     private WarehouseLoadResult() { }
     
-    public record LoadSuccess(TimeSpan LoadTime) : WarehouseLoadResult;
+    public sealed record LoadSuccess(TimeSpan LoadTime) : WarehouseLoadResult;
     
-    public record LoadFailure(Manifest RejectedManifest) : WarehouseLoadResult;
+    public sealed record LoadFailure(Manifest RejectedManifest) : WarehouseLoadResult;
 }
 
 public abstract record WarehouseUnloadResult
 {
     private WarehouseUnloadResult() { }
     
-    public record UnloadSuccess(TimeSpan UnloadTIme) : WarehouseUnloadResult;
+    public sealed record UnloadSuccess(TimeSpan UnloadTIme) : WarehouseUnloadResult;
     
-    public record UnloadFailure(Manifest RejectedManifest) : WarehouseUnloadResult;
+    public sealed record UnloadFailure(Manifest RejectedManifest) : WarehouseUnloadResult;
 }

@@ -4,20 +4,21 @@ namespace oop_lab1;
 
 public class Truck : SkuHolder
 {
-    private double Speed { get; }
-    private Coordinates Location { get; set; }
+    private readonly double _speed;
+    
+    public Coordinates Location { get; private set; }
 
-    public Truck(double capacity, double speed, Coordinates location) : base(capacity)
+    public Truck(double сapacity, double speed, Coordinates location) : base(сapacity)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(speed);
-        Speed = speed;
+        _speed = speed;
         Location = location;
     }
 
     public TimeSpan MoveTo(Coordinates target)
     {
         var distance = DistanceCalculator.Distance(Location, target);
-        var hours = distance / Speed;
+        var hours = distance / _speed;
         Location = target;
         return TimeSpan.FromHours(hours);
     }
