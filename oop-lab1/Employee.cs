@@ -6,7 +6,7 @@ public class Employee : IComparable<Employee>
     public TimeSpan LoadTime { get; }
     public TimeSpan MoveTime { get; }
 
-    public Employee(double capacity, TimeSpan loadTime, TimeSpan moveTime, Sku sku)
+    public Employee(double capacity, TimeSpan loadTime, TimeSpan moveTime)
     {
         Capacity = capacity;
         LoadTime = loadTime;

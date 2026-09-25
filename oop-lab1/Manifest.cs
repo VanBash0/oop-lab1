@@ -6,7 +6,7 @@ public class Manifest
 
     public Manifest(IEnumerable<SkuSet> skuSets)
     {
-        _skuSets = skuSets.ToList();
+        _skuSets = skuSets.OrderByDescending(skuSet => skuSet.Sku.VolumeWeightChars).ToList();
     }
     
     public IReadOnlyList<SkuSet> SkuSets => _skuSets;
