@@ -15,7 +15,7 @@ public abstract record WarehouseUnloadResult
 {
     private WarehouseUnloadResult() { }
     
-    public sealed record UnloadSuccess(TimeSpan UnloadTIme) : WarehouseUnloadResult;
+    public sealed record UnloadSuccess(TimeSpan UnloadTime) : WarehouseUnloadResult;
     
     public sealed record UnloadFailure(Manifest RejectedManifest) : WarehouseUnloadResult;
 }
