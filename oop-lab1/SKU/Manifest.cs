@@ -1,4 +1,4 @@
-﻿namespace oop_lab1;
+﻿namespace oop_lab1.SKU;
 
 public class Manifest
 {

@@ -1,6 +1,8 @@
-﻿using oop_lab1.Results;
+﻿using oop_lab1.Geography;
+using oop_lab1.Results;
+using oop_lab1.SKU;
 
-namespace oop_lab1;
+namespace oop_lab1.Logistics;
 
 public class Truck : SkuHolder
 {

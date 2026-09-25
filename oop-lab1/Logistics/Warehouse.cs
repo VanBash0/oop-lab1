@@ -1,20 +1,23 @@
-﻿using oop_lab1.Results;
+﻿using oop_lab1.Geography;
+using oop_lab1.Results;
+using oop_lab1.SKU;
+using oop_lab1.Workforce;
 
-namespace oop_lab1;
+namespace oop_lab1.Logistics;
 
 public readonly record struct WarehouseId(uint Value);
 
 public class Warehouse : SkuHolder
 {
-    private WarehouseId Id { get; }
-    private Coordinates Location { get; }
+    private readonly WarehouseId _id;
+    public Coordinates Location { get; }
     
     private readonly EmployeeManager _manager;
 
     public Warehouse(WarehouseId id, Coordinates location,
-                     uint сapacity, List<Employee> employees) : base(сapacity)
+                     uint capacity, List<Employee> employees) : base(capacity)
     {
-        Id = id;
+        _id = id;
         Location = location;
         _manager = new EmployeeManager(employees);
     }

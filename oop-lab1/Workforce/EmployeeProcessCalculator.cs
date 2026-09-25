@@ -1,13 +1,14 @@
-﻿namespace oop_lab1;
+﻿using oop_lab1.SKU;
 
-public class EmployeeManager
+namespace oop_lab1.Workforce;
+
+public class EmployeeProcessCalculator
 {
     private readonly List<Employee> _employees;
-    
-    public EmployeeManager(IEnumerable<Employee> employees)
+
+    public EmployeeProcessCalculator(List<Employee> employees)
     {
-        _employees = employees.ToList();
-        _employees.Sort();
+        _employees = employees;
     }
 
     public TimeSpan CalculateLoadTime(Manifest manifest)
@@ -35,7 +36,7 @@ public class EmployeeManager
 
             totalTime += employee.LoadTime;
             ProcessEmployeesMoving(employee.LoadTime, movingEmployees, employeesAtTruck);
-            
+
             movingEmployees.Add((employee, employee.MoveTime));
         }
 
@@ -68,27 +69,27 @@ public class EmployeeManager
                 totalTime += shortestMoveTime;
                 ProcessEmployeesMoving(shortestMoveTime, movingEmployees, employeesAtTruck);
             }
-            
+
             var unloadingEmployee = employeesAtTruck.Dequeue();
             totalTime += unloadingEmployee.LoadTime;
             ProcessEmployeesMoving(unloadingEmployee.LoadTime, movingEmployees, employeesAtTruck);
             employeesAtWarehouse.Enqueue(unloadingEmployee);
         }
-        
+
         return totalTime;
     }
-    
+
     private bool TryLoadEmployee(Employee employee, List<SkuSet> remainingSkus)
     {
         var freeCapacity = employee.Capacity;
         var isLoaded = false;
-        
-        int index = 0;
+
+        var index = 0;
         while (index < remainingSkus.Count && freeCapacity > 0)
         {
             var skuSet = remainingSkus[index];
             var fittingCount = (uint)Math.Min(Math.Floor(freeCapacity / skuSet.Sku.VolumeWeightChars), skuSet.Quantity);
-                
+
             if (fittingCount == 0)
             {
                 index++;
@@ -107,7 +108,7 @@ public class EmployeeManager
                 index++;
             }
         }
-        
+
         return isLoaded;
     }
 
@@ -115,7 +116,7 @@ public class EmployeeManager
         List<(Employee Employee, TimeSpan RemainingMoveTime)> movingEmployees,
         Queue<Employee> employeeQueue)
     {
-        for (int i = 0; i < movingEmployees.Count; i++)
+        for (var i = movingEmployees.Count - 1; i >= 0; i--)
         {
             var movingEmployee = movingEmployees[i];
             var remainingMoveTime = movingEmployee.RemainingMoveTime - elapsedTime;
