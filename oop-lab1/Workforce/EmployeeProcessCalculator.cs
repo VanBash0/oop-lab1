@@ -29,7 +29,7 @@ public class EmployeeProcessCalculator
             }
 
             var employee = employeesAtTruck.Dequeue();
-            if (!TryLoadEmployee(employee, remainingSkus))
+            if (!SkuAllocator.TryLoadEmployee(employee, remainingSkus))
             {
                 continue;
             }
@@ -56,7 +56,7 @@ public class EmployeeProcessCalculator
             while (employeesAtWarehouse.Count > 0)
             {
                 var employee = employeesAtWarehouse.Dequeue();
-                if (!TryLoadEmployee(employee, remainingSkus))
+                if (!SkuAllocator.TryLoadEmployee(employee, remainingSkus))
                 {
                     continue;
                 }
@@ -77,39 +77,6 @@ public class EmployeeProcessCalculator
         }
 
         return totalTime;
-    }
-
-    private bool TryLoadEmployee(Employee employee, List<SkuSet> remainingSkus)
-    {
-        var freeCapacity = employee.Capacity;
-        var isLoaded = false;
-
-        var index = 0;
-        while (index < remainingSkus.Count && freeCapacity > 0)
-        {
-            var skuSet = remainingSkus[index];
-            var fittingCount = (uint)Math.Min(Math.Floor(freeCapacity / skuSet.Sku.VolumeWeightChars), skuSet.Quantity);
-
-            if (fittingCount == 0)
-            {
-                index++;
-                continue;
-            }
-
-            freeCapacity -= skuSet.Sku.VolumeWeightChars * fittingCount;
-            isLoaded = true;
-            if (fittingCount == skuSet.Quantity)
-            {
-                remainingSkus.RemoveAt(index);
-            }
-            else
-            {
-                remainingSkus[index] = skuSet with { Quantity = skuSet.Quantity - fittingCount };
-                index++;
-            }
-        }
-
-        return isLoaded;
     }
 
     private void ProcessEmployeesMoving(TimeSpan elapsedTime,
