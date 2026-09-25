@@ -8,8 +8,7 @@ public class EmployeeManager
 
     public EmployeeManager(IEnumerable<Employee> employees)
     {
-        var sortedEmployees = employees.ToList();
-        sortedEmployees.Sort();
+        var sortedEmployees = employees.OrderByDescending(employee => employee.Capacity).ToList();
         _processCalculator = new EmployeeProcessCalculator(sortedEmployees);
     }
 
