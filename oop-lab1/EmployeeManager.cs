@@ -13,28 +13,28 @@ public class EmployeeManager
     public TimeSpan CalculateLoadTime(Manifest manifest)
     {
         var remainingSkus = manifest.SkuSets.ToList();
-        var employeeQueue = new Queue<Employee>(_employees);
+        var employeesAtTruck = new Queue<Employee>(_employees);
         var movingEmployees = new List<(Employee Employee, TimeSpan RemainingMoveTime)>();
         var totalTime = TimeSpan.Zero;
 
         while (remainingSkus.Count > 0)
         {
-            if (employeeQueue.Count == 0)
+            if (employeesAtTruck.Count == 0)
             {
                 var shortestMoveTime = movingEmployees.Min(employee => employee.RemainingMoveTime);
                 totalTime += shortestMoveTime;
-                ProcessEmployeesMoving(shortestMoveTime, movingEmployees, employeeQueue);
+                ProcessEmployeesMoving(shortestMoveTime, movingEmployees, employeesAtTruck);
                 continue;
             }
 
-            var employee = employeeQueue.Dequeue();
+            var employee = employeesAtTruck.Dequeue();
             if (!TryLoadEmployee(employee, remainingSkus))
             {
                 continue;
             }
 
             totalTime += employee.LoadTime;
-            ProcessEmployeesMoving(employee.LoadTime, movingEmployees, employeeQueue);
+            ProcessEmployeesMoving(employee.LoadTime, movingEmployees, employeesAtTruck);
             
             movingEmployees.Add((employee, employee.MoveTime));
         }
@@ -44,8 +44,38 @@ public class EmployeeManager
 
     public TimeSpan CalculateUnloadTime(Manifest manifest)
     {
-        // TODO
-        return TimeSpan.Zero;
+        var remainingSkus = manifest.SkuSets.ToList();
+        var totalTime = TimeSpan.Zero;
+        var employeesAtTruck = new Queue<Employee>();
+        var employeesAtWarehouse = new Queue<Employee>(_employees);
+        var movingEmployees = new List<(Employee Employee, TimeSpan RemainingMoveTime)>();
+
+        while (remainingSkus.Count > 0 || employeesAtTruck.Count > 0 || movingEmployees.Count > 0)
+        {
+            while (employeesAtWarehouse.Count > 0)
+            {
+                var employee = employeesAtWarehouse.Dequeue();
+                if (!TryLoadEmployee(employee, remainingSkus))
+                {
+                    continue;
+                }
+                movingEmployees.Add((employee, employee.MoveTime));
+            }
+
+            if (employeesAtTruck.Count == 0)
+            {
+                var shortestMoveTime = movingEmployees.Min(employee => employee.RemainingMoveTime);
+                totalTime += shortestMoveTime;
+                ProcessEmployeesMoving(shortestMoveTime, movingEmployees, employeesAtTruck);
+            }
+            
+            var unloadingEmployee = employeesAtTruck.Dequeue();
+            totalTime += unloadingEmployee.LoadTime;
+            ProcessEmployeesMoving(unloadingEmployee.LoadTime, movingEmployees, employeesAtTruck);
+            employeesAtWarehouse.Enqueue(unloadingEmployee);
+        }
+        
+        return totalTime;
     }
     
     private bool TryLoadEmployee(Employee employee, List<SkuSet> remainingSkus)
