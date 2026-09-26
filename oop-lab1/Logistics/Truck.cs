@@ -10,7 +10,7 @@ public class Truck : SkuHolder
     
     public Coordinates Location { get; private set; }
 
-    public Truck(double сapacity, double speed, Coordinates location) : base(сapacity)
+    public Truck(VolumeWeightChars сapacity, double speed, Coordinates location) : base(сapacity)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(speed);
         _speed = speed;

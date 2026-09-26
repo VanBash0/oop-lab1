@@ -10,10 +10,11 @@ public static class SkuAllocator
         var isLoaded = false;
 
         var index = 0;
-        while (index < remainingSkus.Count && freeCapacity > 0)
+        while (index < remainingSkus.Count && !freeCapacity.IsEmpty)
         {
             var skuSet = remainingSkus[index];
-            var fittingCount = (uint)Math.Min(Math.Floor(freeCapacity / skuSet.Sku.VolumeWeightChars), skuSet.Quantity);
+            var unit = skuSet.Sku.VolumeWeightChars;
+            var fittingCount = Math.Min(unit.GetMaxFitIn(freeCapacity), skuSet.Quantity);
 
             if (fittingCount == 0)
             {
@@ -21,7 +22,7 @@ public static class SkuAllocator
                 continue;
             }
 
-            freeCapacity -= skuSet.Sku.VolumeWeightChars * fittingCount;
+            freeCapacity = freeCapacity.Subtract(unit.Multiply(fittingCount));
             isLoaded = true;
             if (fittingCount == skuSet.Quantity)
             {

@@ -2,28 +2,30 @@
 
 public abstract class SkuHolder
 {
-    private readonly double _сapacity;
+    private readonly VolumeWeightChars _capacity;
     private readonly Dictionary<Sku, uint> _skus;
 
-    protected SkuHolder(double сapacity)
+    protected SkuHolder(VolumeWeightChars capacity)
     {
-        _сapacity = сapacity;
+        _capacity = capacity;
         _skus = new Dictionary<Sku, uint>();
     }
     
-    private double GetFreeSpace()
+    private VolumeWeightChars GetFreeSpace()
     {
-        double occupiedSpace = 0;
+        var occupiedChars = new VolumeWeightChars();
         foreach (var sku in _skus)
         {
-            occupiedSpace += sku.Key.VolumeWeightChars * sku.Value;
+            var unit =  sku.Key.VolumeWeightChars;
+            occupiedChars = occupiedChars.Add(unit.Multiply(sku.Value));
         }
-        return _сapacity - occupiedSpace;
+
+        return occupiedChars;
     }
 
     protected bool TryAddSku(Manifest manifest)
     {
-        if (manifest.GetTotalVolumeWeightChars() > GetFreeSpace())
+        if (manifest.GetTotalVolumeWeightChars().FitsIn(GetFreeSpace()))
         {
             return false;
         }

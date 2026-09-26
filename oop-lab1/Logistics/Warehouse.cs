@@ -15,7 +15,7 @@ public class Warehouse : SkuHolder
     private readonly EmployeeManager _manager;
 
     public Warehouse(WarehouseId id, Coordinates location,
-                     uint capacity, List<Employee> employees) : base(capacity)
+                     VolumeWeightChars capacity, List<Employee> employees) : base(capacity)
     {
         _id = id;
         Location = location;

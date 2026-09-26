@@ -6,11 +6,14 @@ public class Sku
 {
     public SkuId Id { get; }
     public string Name { get; }
-    public double VolumeWeightChars { get; }
+    public VolumeWeightChars VolumeWeightChars { get; }
 
-    public Sku(SkuId id, string name, double volumeWeightChars)
+    public Sku(SkuId id, string name, VolumeWeightChars volumeWeightChars)
     {
-        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(volumeWeightChars);
+        if (volumeWeightChars.IsEmpty)
+        {
+            throw new ArgumentOutOfRangeException(volumeWeightChars.ToString());
+        }
         Id = id;
         Name = name;
         VolumeWeightChars = volumeWeightChars;

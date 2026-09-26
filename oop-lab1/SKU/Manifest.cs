@@ -11,14 +11,15 @@ public class Manifest
     
     public IReadOnlyList<SkuSet> SkuSets => _skuSets;
 
-    public double GetTotalVolumeWeightChars()
+    public VolumeWeightChars GetTotalVolumeWeightChars()
     {
-        var total = 0.0;
+        var totalChars = new VolumeWeightChars();
         foreach (var skuSet in _skuSets)
         {
-            total += skuSet.Sku.VolumeWeightChars * skuSet.Quantity;
+            var unit = skuSet.Sku.VolumeWeightChars;
+            totalChars = totalChars.Add(unit.Multiply(skuSet.Quantity));
         }
 
-        return total;
+        return totalChars;
     }
 }
