@@ -8,7 +8,7 @@ public abstract record TruckLoadResult
     
     public sealed record LoadSuccess : TruckLoadResult;
     
-    public sealed record LoadFailure(Manifest RejectedManifest) : TruckLoadResult;
+    public sealed record LoadFailure : TruckLoadResult;
 }
 
 public abstract record TruckUnloadResult
@@ -17,5 +17,5 @@ public abstract record TruckUnloadResult
     
     public sealed record UnloadSuccess : TruckUnloadResult;
     
-    public sealed record UnloadFailure(Manifest RejectedManifest) : TruckUnloadResult;
+    public sealed record UnloadFailure : TruckUnloadResult;
 }

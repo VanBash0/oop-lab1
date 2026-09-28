@@ -32,7 +32,7 @@ public class Truck : SkuHolder
             return new TruckLoadResult.LoadSuccess();
         }
 
-        return new TruckLoadResult.LoadFailure(manifest);
+        return new TruckLoadResult.LoadFailure();
     }
 
     public TruckUnloadResult Unload(Manifest manifest)
@@ -42,6 +42,6 @@ public class Truck : SkuHolder
             return new TruckUnloadResult.UnloadSuccess();
         }
         
-        return new TruckUnloadResult.UnloadFailure(manifest);
+        return new TruckUnloadResult.UnloadFailure();
     }
 }

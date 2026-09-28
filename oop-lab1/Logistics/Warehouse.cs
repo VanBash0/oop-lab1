@@ -26,7 +26,7 @@ public class Warehouse : SkuHolder
     {
         if (!TryAddSku(manifest))
         {
-            return new WarehouseLoadResult.LoadFailure(manifest);
+            return new WarehouseLoadResult.LoadFailure();
         }
         
         var loadTime = _manager.CalculateLoadTime(manifest);
@@ -37,7 +37,7 @@ public class Warehouse : SkuHolder
     {
         if (!TryRemoveSku(manifest))
         {
-            return new WarehouseUnloadResult.UnloadFailure(manifest);
+            return new WarehouseUnloadResult.UnloadFailure();
         }
         
         var unloadTime = _manager.CalculateUnloadTime(manifest);

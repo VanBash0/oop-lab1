@@ -20,9 +20,8 @@ public class MoveStageTests
         
         var truck = new Truck(new VolumeWeightChars(1.0, 1.0), speed, from);
         var moveStage = new MoveStage(to);
-        var routeSheet = new RouteSheet(new List<IRouteStage> { moveStage });
 
-        var result = Assert.IsType<RouteStageResult.StageSuccess>(routeSheet.Run(truck));
+        var result = Assert.IsType<RouteStageResult.StageSuccess>(moveStage.Execute(truck));
         var actualTime = result.TotalTime;
         var expectedTime = TimeSpan.FromHours(expectedDistance / speed);
         var tolerance = TimeSpan.FromSeconds(5);

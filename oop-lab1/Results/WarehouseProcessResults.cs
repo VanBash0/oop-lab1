@@ -8,7 +8,7 @@ public abstract record WarehouseLoadResult
     
     public sealed record LoadSuccess(TimeSpan LoadTime) : WarehouseLoadResult;
     
-    public sealed record LoadFailure(Manifest RejectedManifest) : WarehouseLoadResult;
+    public sealed record LoadFailure : WarehouseLoadResult;
 }
 
 public abstract record WarehouseUnloadResult
@@ -17,5 +17,5 @@ public abstract record WarehouseUnloadResult
     
     public sealed record UnloadSuccess(TimeSpan UnloadTime) : WarehouseUnloadResult;
     
-    public sealed record UnloadFailure(Manifest RejectedManifest) : WarehouseUnloadResult;
+    public sealed record UnloadFailure : WarehouseUnloadResult;
 }

@@ -14,20 +14,20 @@ public class UnloadStage : WarehouseStage
         
         if (!IsTruckAtWarehouse(truck))
         {
-            return new RouteStageResult.TruckTooFar(_warehouse);
+            return new RouteStageResult.TruckTooFar();
         }
         
         var unloadResult = truck.Unload(_manifest);
         if (unloadResult is TruckUnloadResult.UnloadFailure unloadFailure)
         {
-            return new RouteStageResult.TruckInsufficientStock(_manifest);
+            return new RouteStageResult.TruckInsufficientStock();
         }
         
         var loadResult = _warehouse.Load(_manifest);
         switch (loadResult)
         {
             case WarehouseLoadResult.LoadFailure:
-                return new RouteStageResult.WarehouseInsufficientCapacity(_manifest);
+                return new RouteStageResult.WarehouseInsufficientCapacity();
             case WarehouseLoadResult.LoadSuccess success:
                 totalTime += success.LoadTime;
                 break;

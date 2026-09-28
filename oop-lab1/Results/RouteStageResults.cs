@@ -7,15 +7,15 @@ public record RouteStageResult
 {
     private RouteStageResult() { }
 
-    public sealed record TruckInsufficientCapacity(Manifest RejectedManifest) : RouteStageResult;
+    public sealed record TruckInsufficientCapacity : RouteStageResult;
     
-    public sealed record TruckInsufficientStock(Manifest RejectedManifest) : RouteStageResult;
+    public sealed record TruckInsufficientStock : RouteStageResult;
     
-    public sealed record WarehouseInsufficientCapacity(Manifest RejectedManifest) : RouteStageResult;
+    public sealed record WarehouseInsufficientCapacity : RouteStageResult;
     
-    public sealed record WarehouseInsufficientStock(Manifest RejectedManifest) : RouteStageResult;
+    public sealed record WarehouseInsufficientStock : RouteStageResult;
     
-    public sealed record TruckTooFar(Warehouse Warehouse) : RouteStageResult;
+    public sealed record TruckTooFar : RouteStageResult;
 
     public sealed record StageSuccess(TimeSpan TotalTime) : RouteStageResult;
 }

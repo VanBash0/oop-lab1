@@ -40,8 +40,7 @@ public class TruckTests
         var laptopSet = new SkuSet(laptop, 50);
         
         var manifest = new Manifest(new List<SkuSet> { laptopSet });
-        var loadResult = Assert.IsType<TruckLoadResult.LoadFailure>(truck.Load(manifest));
-        Assert.Equal(manifest, loadResult.RejectedManifest);
+        Assert.IsType<TruckLoadResult.LoadFailure>(truck.Load(manifest));
     }
     
     [Fact]
@@ -59,8 +58,7 @@ public class TruckTests
         var tvManifest = new Manifest(new List<SkuSet> { tvSet });
         
         truck.Load(laptopManifest);
-        var tvLoadResult = Assert.IsType<TruckLoadResult.LoadFailure>(truck.Load(tvManifest));
-        Assert.Equal(tvManifest, tvLoadResult.RejectedManifest);
+        Assert.IsType<TruckLoadResult.LoadFailure>(truck.Load(tvManifest));
     }
 
     [Fact]
@@ -93,8 +91,7 @@ public class TruckTests
         var unloadManifest = new Manifest(new List<SkuSet> { unloadSet });
         
         truck.Load(loadManifest);
-        var unloadResult = Assert.IsType<TruckUnloadResult.UnloadFailure>(truck.Unload(unloadManifest));
-        Assert.Equal(unloadManifest, unloadResult.RejectedManifest);
+        Assert.IsType<TruckUnloadResult.UnloadFailure>(truck.Unload(unloadManifest));
     }
 
     [Fact]
