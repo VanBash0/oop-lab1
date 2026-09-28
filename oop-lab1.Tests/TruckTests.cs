@@ -32,7 +32,7 @@ public class TruckTests
     }
 
     [Fact]
-    public void Load_EmptyTruckOutOfCapacityLimits_Fail()
+    public void Load_EmptyTruckOutOfCapacityLimits_Failure()
     {
         var truck = new Truck(new  VolumeWeightChars(100.0, 100.0), 10.0, new Coordinates());
             
@@ -95,7 +95,7 @@ public class TruckTests
     }
 
     [Fact]
-    public void MoveTo_Coordinates_Time()
+    public void MoveTo_Coordinates_CorrectTime()
     {
         var from = new Coordinates(0, 0);
         var to = new Coordinates(0, 1);

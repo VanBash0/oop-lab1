@@ -25,7 +25,7 @@ public class UnloadStageTests
 
         var unloadStage = new UnloadStage(warehouse, manifest);
         var result = Assert.IsType<RouteStageResult.StageSuccess>(unloadStage.Execute(truck));
-        Assert.Equal(result.TotalTime, TimeSpan.FromMinutes(5));
+        Assert.Equal(TimeSpan.FromMinutes(5), result.TotalTime);
     }
 
     [Fact]
@@ -57,11 +57,12 @@ public class UnloadStageTests
         
         var laptop = new Sku(new SkuId(1), "laptop", new VolumeWeightChars(10.0, 10.0));
         var laptopSet = new SkuSet(laptop, 5);
+        var bigSet = new SkuSet(laptop, 50);
         
         var loadManifest = new Manifest(new List<SkuSet>() { laptopSet });
         truck.Load(loadManifest);
         
-        var unloadManifest = new Manifest(new List<SkuSet>() { laptopSet, laptopSet });
+        var unloadManifest = new Manifest(new List<SkuSet>() { bigSet });
         var unloadStage = new UnloadStage(warehouse, unloadManifest);
         Assert.IsType<RouteStageResult.TruckInsufficientStock>(unloadStage.Execute(truck));
     }
