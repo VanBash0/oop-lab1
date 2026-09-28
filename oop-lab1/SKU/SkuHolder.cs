@@ -20,12 +20,12 @@ public abstract class SkuHolder
             occupiedChars = occupiedChars.Add(unit.Multiply(sku.Value));
         }
 
-        return occupiedChars;
+        return _capacity.Subtract(occupiedChars);
     }
 
     protected bool TryAddSku(Manifest manifest)
     {
-        if (manifest.GetTotalVolumeWeightChars().FitsIn(GetFreeSpace()))
+        if (!manifest.GetTotalVolumeWeightChars().FitsIn(GetFreeSpace()))
         {
             return false;
         }

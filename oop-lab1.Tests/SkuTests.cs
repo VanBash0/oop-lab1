@@ -5,7 +5,7 @@ namespace oop_lab1.Tests;
 public class SkuTests
 {
     [Fact]
-    public void SkuConstruct_ValidArguments_Success()
+    public void Construct_ValidArguments_Success()
     {
         var sku = new Sku(new SkuId(1), "laptop", new VolumeWeightChars(10.0, 5.0));
         Assert.Equal("laptop", sku.Name);
@@ -20,7 +20,7 @@ public class SkuTests
     [InlineData(0.0, 5.0)]
     [InlineData(10.0, 0.0)]
     [InlineData(0.0, 0.0)]
-    public void SkuConstruct_InvalidVolumeWeightChars_ThrowsException(double volume, double weight)
+    public void Construct_InvalidVolumeWeightChars_ThrowsException(double volume, double weight)
     {
         Assert.Throws<ArgumentOutOfRangeException>(
             () => new Sku(new SkuId(1), "laptop", new VolumeWeightChars(volume, weight))
