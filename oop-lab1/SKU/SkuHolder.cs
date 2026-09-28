@@ -59,6 +59,11 @@ public abstract class SkuHolder
 
         foreach (var skuSet in manifest.SkuSets)
         {
+            if (!_skus.ContainsKey(skuSet.Sku))
+            {
+                return false;
+            }
+            
             var sku = skuSet.Sku;
             var quantity = skuSet.Quantity;
             _skus[sku] -= quantity;
