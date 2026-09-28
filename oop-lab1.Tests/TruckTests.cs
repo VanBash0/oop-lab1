@@ -108,11 +108,11 @@ public class TruckTests
         var expectedDistance = earthRadius * Math.PI / 180;
         
         var truck = new Truck(new VolumeWeightChars(1.0, 1.0), speed, from);
-        var actual = truck.MoveTo(to);
-        var expected = TimeSpan.FromHours(expectedDistance / speed);
+        var actualTime = truck.MoveTo(to);
+        var expectedTime = TimeSpan.FromHours(expectedDistance / speed);
         var tolerance = TimeSpan.FromSeconds(5);
 
-        Assert.InRange(actual, expected - tolerance, expected + tolerance);
+        Assert.InRange(actualTime, expectedTime - tolerance, expectedTime + tolerance);
         Assert.Equal(to, truck.Location);
     }
 }
