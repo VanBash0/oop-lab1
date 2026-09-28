@@ -1,6 +1,6 @@
 ﻿namespace oop_lab1.SKU;
 
-public readonly record struct SkuId(uint Value);
+public readonly record struct SkuId(int Value);
 
 public class Sku
 {
