@@ -18,9 +18,9 @@ public readonly struct VolumeWeightChars : IComparable<VolumeWeightChars>
         return _volume <= other._volume && _weight <= other._weight;
     }
 
-    public uint GetMaxFitIn(VolumeWeightChars available)
+    public int GetMaxFitIn(VolumeWeightChars available)
     {
-        return (uint)Math.Min(Math.Floor(available._volume / _volume), Math.Floor(available._weight / _weight));
+        return (int)Math.Min(Math.Floor(available._volume / _volume), Math.Floor(available._weight / _weight));
     }
 
     public VolumeWeightChars Subtract(VolumeWeightChars other)
@@ -33,7 +33,7 @@ public readonly struct VolumeWeightChars : IComparable<VolumeWeightChars>
         return new VolumeWeightChars(_volume + other._volume, _weight + other._weight);
     }
 
-    public VolumeWeightChars Multiply(uint count)
+    public VolumeWeightChars Multiply(int count)
     {
         return new VolumeWeightChars(_volume * count, _weight * count);
     }

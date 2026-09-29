@@ -19,5 +19,3 @@ public class Sku
         VolumeWeightChars = volumeWeightChars;
     }
 }
-
-public readonly record struct SkuSet(Sku Sku, uint Quantity);

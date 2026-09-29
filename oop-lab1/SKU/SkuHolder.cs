@@ -3,12 +3,12 @@
 public abstract class SkuHolder
 {
     private readonly VolumeWeightChars _capacity;
-    private readonly Dictionary<Sku, uint> _skus;
+    private readonly Dictionary<Sku, int> _skus;
 
     protected SkuHolder(VolumeWeightChars capacity)
     {
         _capacity = capacity;
-        _skus = new Dictionary<Sku, uint>();
+        _skus = new Dictionary<Sku, int>();
     }
     
     private VolumeWeightChars GetFreeSpace()

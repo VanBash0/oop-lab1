@@ -16,8 +16,7 @@ public class Manifest
         var totalChars = new VolumeWeightChars();
         foreach (var skuSet in _skuSets)
         {
-            var unit = skuSet.Sku.VolumeWeightChars;
-            totalChars = totalChars.Add(unit.Multiply(skuSet.Quantity));
+            totalChars = totalChars.Add(skuSet.TotalVolumeWeight);
         }
 
         return totalChars;

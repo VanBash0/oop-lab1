@@ -14,7 +14,7 @@ public static class SkuAllocator
         {
             var skuSet = remainingSkus[index];
             var unit = skuSet.Sku.VolumeWeightChars;
-            var fittingCount = Math.Min(unit.GetMaxFitIn(freeCapacity), skuSet.Quantity);
+            int fittingCount = Math.Min(unit.GetMaxFitIn(freeCapacity), skuSet.Quantity);
 
             if (fittingCount == 0)
             {
